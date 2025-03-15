@@ -4,6 +4,7 @@ from os import system as do
 
 programs = [
     "mef/print",
+    "mef/sum",
     "mbf/print",
 ]
 
