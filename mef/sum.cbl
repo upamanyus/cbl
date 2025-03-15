@@ -13,30 +13,39 @@ FILE-CONTROL.
 DATA DIVISION.
 FILE SECTION.
 FD mef.
-01 f_mbr.
-  02 f_mbr-ssn PIC 999999999.
-  02 f_mbr-year PIC 9(4).
-  02 f_mbr-amnt PIC 9(10).99.
+01 f_mer.
+  02 f_mer-ssn PIC 9(9).
+  02 filler PIC X VALUE " ".
+  02 f_mer-year PIC 9(4).
+  02 filler PIC X VALUE " ".
+  02 f_mer-amnt PIC 9(12).99.
 
 FD sorted-mef.
-01 f_mer.
-  02 f_mer-ssn PIC 999999999.
-  02 f_mer-year PIC 9(4).
-  02 f_mer-amnt PIC 9(10).99.
+01 sf_mer.
+  02 sf_mer-ssn PIC 9(9).
+  02 filler PIC X VALUE " ".
+  02 sf_mer-year PIC 9(4).
+  02 filler PIC X VALUE " ".
+  02 sf_mer-amnt PIC 9(12).99.
 
 SD work-mef.
 01 wo_mer.
-  02 wo_mer-ssn PIC 999999999.
+  02 wo_mer-ssn PIC 9(9).
+  02 filler PIC X VALUE " ".
   02 wo_mer-year PIC 9(4).
-  02 wo_mer-amnt PIC 9(10).99.
+  02 filler PIC X VALUE " ".
+  02 wo_mer-amnt PIC 9(12).99.
 
 LOCAL-STORAGE SECTION.
 01 mer.
-  02 mer-ssn PIC 999999999.
-  02 mer-year PIC 9999.
-  02 mer-amnt PIC 9(10).99 VALUE zero.
+  02 mer-ssn PIC 9(9).
+  02 filler PIC X VALUE " ".
+  02 mer-year PIC 9(4).
+  02 filler PIC X VALUE " ".
+  02 mer-amnt PIC 9(12).99 VALUE zero.
 01 last-ssn PIC 9(9).
-01 total-income PIC 9(10).99 VALUE zero.
+01 mer-amnt-dec PIC 9(12)V99.
+01 total-income PIC 9(12)V99 VALUE zero.
 01 b_eof PIC A(1) VALUE 'F'.
 
 PROCEDURE DIVISION.
@@ -48,10 +57,14 @@ OPEN INPUT sorted-mef.
 PERFORM UNTIL b_eof = 'T'
   READ sorted-mef INTO mer
     AT END MOVE 'T' TO b_eof
-    NOT AT END DISPLAY mer
   END-READ
 
-  ADD mer-amnt to total-income
+  DISPLAY mer-ssn
+  DISPLAY mer-year
+  DISPLAY mer-amnt
+  MOVE mer-amnt TO mer-amnt-dec
+  ADD mer-amnt-dec TO total-income
+  DISPLAY mer-amnt-dec
   DISPLAY total-income
 END-PERFORM.
 
