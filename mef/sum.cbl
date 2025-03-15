@@ -69,8 +69,7 @@ PERFORM UNTIL b_eof = 'T'
       IF mer-ssn=last-ssn THEN
         ADD mer-amnt-dec TO total-income
       ELSE
-        DISPLAY last-ssn
-        DISPLAY total-income
+        DISPLAY 'ssn: ' last-ssn ' $' total-income
         MOVE mer-ssn TO last-ssn
         MOVE mer-amnt-dec TO total-income
       END-IF
@@ -78,7 +77,6 @@ PERFORM UNTIL b_eof = 'T'
 END-PERFORM.
 CLOSE sorted-mef.
 
-DISPLAY last-ssn
-DISPLAY total-income
+DISPLAY 'ssn: ' last-ssn ' $' total-income
 
 STOP RUN.
