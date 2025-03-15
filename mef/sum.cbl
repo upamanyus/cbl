@@ -6,35 +6,25 @@ INPUT-OUTPUT SECTION.
 FILE-CONTROL.
   SELECT mef ASSIGN TO './data/mef.txt'
     ORGANIZATION IS LINE SEQUENTIAL.
-  SELECT sorted-mef ASSIGN TO './sorted-mef.txt'
-    ORGANIZATION IS LINE SEQUENTIAL.
   SELECT work-mef ASSIGN TO './mef-sorted.tmp'.
 
 DATA DIVISION.
 FILE SECTION.
 FD mef.
-01 f_mer.
-  02 f_mer-ssn PIC 9(9).
+01 f-mer.
+  02 f-mer-ssn PIC 9(9).
   02 filler PIC X VALUE " ".
-  02 f_mer-year PIC 9(4).
+  02 f-mer-year PIC 9(4).
   02 filler PIC X VALUE " ".
-  02 f_mer-amnt PIC 9(12).99.
-
-FD sorted-mef.
-01 sf_mer.
-  02 sf_mer-ssn PIC 9(9).
-  02 filler PIC X VALUE " ".
-  02 sf_mer-year PIC 9(4).
-  02 filler PIC X VALUE " ".
-  02 sf_mer-amnt PIC 9(12).99.
+  02 f-mer-amnt PIC 9(12).99.
 
 SD work-mef.
-01 wo_mer.
-  02 wo_mer-ssn PIC 9(9).
+01 w-mer.
+  02 w-mer-ssn PIC 9(9).
   02 filler PIC X VALUE " ".
-  02 wo_mer-year PIC 9(4).
+  02 w-mer-year PIC 9(4).
   02 filler PIC X VALUE " ".
-  02 wo_mer-amnt PIC 9(12).99.
+  02 w-mer-amnt PIC 9(12).99.
 
 LOCAL-STORAGE SECTION.
 01 mer.
@@ -47,17 +37,17 @@ LOCAL-STORAGE SECTION.
 01 mer-amnt-dec PIC 9(12)V99.
 01 total-income PIC 9(12)V99 VALUE zero.
 01 is-first PIC A VALUE 'T'.
-01 b_eof PIC A VALUE 'F'.
+01 b-eof PIC A VALUE 'F'.
 
 PROCEDURE DIVISION.
 
-SORT work-mef ON ASCENDING KEY f_mer-ssn
-USING mef GIVING sorted-mef.
+SORT work-mef ON ASCENDING KEY f-mer-ssn
+USING mef OUTPUT PROCEDURE REDUCE.
 
-OPEN INPUT sorted-mef.
-PERFORM UNTIL b_eof = 'T'
-  READ sorted-mef INTO mer
-    AT END MOVE 'T' TO b_eof
+REDUCE.
+PERFORM UNTIL b-eof = 'T'
+  RETURN work-mef INTO mer
+    AT END MOVE 'T' TO b-eof
     NOT AT END
       MOVE mer-amnt TO mer-amnt-dec
 
@@ -73,9 +63,8 @@ PERFORM UNTIL b_eof = 'T'
         MOVE mer-ssn TO last-ssn
         MOVE mer-amnt-dec TO total-income
       END-IF
-  END-READ
+  END-RETURN
 END-PERFORM.
-CLOSE sorted-mef.
 
 DISPLAY 'ssn: ' last-ssn ' $' total-income
 
