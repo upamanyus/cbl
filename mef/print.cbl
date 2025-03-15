@@ -15,7 +15,7 @@ FD mef.
   02 f_mer-year PIC 9999.
   02 f_mer-amnt PIC z(9)9.99.
 
-WORKING-STORAGE SECTION.
+LOCAL-STORAGE SECTION.
 01 mer.
   02 mer-ssn PIC 999999999.
   02 mer-year PIC 9999.

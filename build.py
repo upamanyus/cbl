@@ -4,8 +4,10 @@ from os import system as do
 
 programs = [
     "mef/print",
+    "mbf/print",
 ]
 
+do("mkdir -p ./bin/mbf")
 do("mkdir -p ./bin/mef")
 
 for program_name in programs:
