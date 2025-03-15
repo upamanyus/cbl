@@ -27,8 +27,8 @@ func main() {
 
 		for j := uint64(0); j < nYears; j++ {
 			year := 1900 + rnd.Uint64N(160)
-			amount := float32(rnd.Uint64N(1_000_000)) + rnd.Float32()
-			f.WriteString(fmt.Sprintf("%d %d %.2f\n", ssn, year, amount))
+			amount := float64(rnd.Uint64N(1_000_000_000_000)) + rnd.Float64()
+			f.WriteString(fmt.Sprintf("%09d %04d %015.2f\n", ssn, year, amount))
 		}
 	}
 }
