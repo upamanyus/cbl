@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 	defer fIn.Close()
-	fOut, err := os.Create("data/benefit-base.txt")
+	fOut, err := os.Create("out")
 	if err != nil {
 		panic(err)
 	}
@@ -23,10 +23,10 @@ func main() {
 	for sc.Scan() {
 		line := sc.Text()
 		parts := strings.Split(line, " ")
-		x, err := strconv.ParseInt(parts[1], 10, 32)
+		x, err := strconv.ParseFloat(parts[1], 64)
 		if err != nil {
 			panic(err)
 		}
-		fOut.WriteString(fmt.Sprintf("%s %06d\n", parts[0], x))
+		fOut.WriteString(fmt.Sprintf("%s %05.2f\n", parts[0], x))
 	}
 }
