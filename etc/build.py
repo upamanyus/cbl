@@ -3,11 +3,13 @@
 from os import system as do
 
 programs = [
+    "etc/conv-wage",
     "mef/print",
     "mef/sum",
     "mbf/print",
 ]
 
+do("mkdir -p ./bin/etc")
 do("mkdir -p ./bin/mbf")
 do("mkdir -p ./bin/mef")
 
