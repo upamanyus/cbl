@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	nPeople  = 1000
-	maxYears = 50
+	nPeople  = 2
+	maxYears = 5
 )
 
 func main() {
@@ -26,7 +26,7 @@ func main() {
 		nYears := rnd.Uint64N(maxYears)
 
 		for j := uint64(0); j < nYears; j++ {
-			year := 1900 + rnd.Uint64N(160)
+			year := 1951 + rnd.Uint64N(73)
 			amount := float64(rnd.Uint64N(1_000_000_000_000)) + rnd.Float64()
 			f.WriteString(fmt.Sprintf("%09d %04d %015.2f\n", ssn, year, amount))
 		}
