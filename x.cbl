@@ -1,0 +1,14 @@
+IDENTIFICATION DIVISION.
+PROGRAM-ID. factorial.
+
+DATA DIVISION.
+LOCAL-STORAGE SECTION.
+  01 ls-n PIC 9(9) VALUE 5.
+  01 ls-fact PIC 9(9) VALUE 1.
+
+
+PROCEDURE DIVISION.
+
+MULTIPLY ls-n BY ls-fact.
+
+DISPLAY "factorial is:" ls-fact.
