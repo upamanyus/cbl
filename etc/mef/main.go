@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	nPeople  = 2
-	maxYears = 10
+	nPeople  = 1000
+	maxYears = 50
 )
 
 func main() {
