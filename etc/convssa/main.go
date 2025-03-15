@@ -19,14 +19,19 @@ func main() {
 		panic(err)
 	}
 	defer fOut.Close()
+
 	sc := bufio.NewScanner(fIn)
 	for sc.Scan() {
 		line := sc.Text()
 		parts := strings.Split(line, " ")
-		x, err := strconv.ParseFloat(parts[1], 64)
+		a1, err := strconv.ParseInt(parts[1], 10, 32)
 		if err != nil {
 			panic(err)
 		}
-		fOut.WriteString(fmt.Sprintf("%s %05.2f\n", parts[0], x))
+		a2, err := strconv.ParseInt(parts[2], 10, 32)
+		if err != nil {
+			panic(err)
+		}
+		fOut.WriteString(fmt.Sprintf("%s %05d %05d\n", parts[0], a1, a2))
 	}
 }
